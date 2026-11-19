@@ -11,6 +11,51 @@
         <item>mbps</item>
     </string-array>
 
+    <string-array name="overlay_show_entries">
+        <item>Download + Upload</item>
+        <item>Download only</item>
+        <item>Upload only</item>
+    </string-array>
+    <string-array name="overlay_show_values">
+        <item>both</item>
+        <item>download</item>
+        <item>upload</item>
+    </string-array>
+
+    <string-array name="overlay_color_entries">
+        <item>\uD83D\uDFE6 Light Blue</item>
+        <item>\uD83D\uDFE2 Green</item>
+        <item>\u26AA White</item>
+        <item>\uD83D\uDFE1 Yellow</item>
+        <item>\uD83D\uDFE0 Orange</item>
+        <item>\uD83D\uDD35 Cyan</item>
+        <item>\uD83D\uDFE3 Purple</item>
+        <item>\uD83D\uDD34 Red</item>
+    </string-array>
+    <string-array name="overlay_color_values">
+        <item>#4FC3F7</item>
+        <item>#AED581</item>
+        <item>#FFFFFF</item>
+        <item>#FFD54F</item>
+        <item>#FFB74D</item>
+        <item>#4DD0E1</item>
+        <item>#CE93D8</item>
+        <item>#EF5350</item>
+    </string-array>
+
+    <string-array name="overlay_text_size_entries">
+        <item>Small (9sp)</item>
+        <item>Medium (11sp)</item>
+        <item>Large (13sp)</item>
+        <item>Extra Large (15sp)</item>
+    </string-array>
+    <string-array name="overlay_text_size_values">
+        <item>9</item>
+        <item>11</item>
+        <item>13</item>
+        <item>15</item>
+    </string-array>
+
     <string-array name="temp_unit_entries">
         <item>Celsius (\u00B0C)</item>
         <item>Fahrenheit (\u00B0F)</item>

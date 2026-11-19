@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.PixelFormat
 import android.graphics.Typeface
@@ -19,10 +20,12 @@ import android.os.Looper
 import android.provider.Settings
 import android.util.TypedValue
 import android.view.Gravity
+import android.view.View
 import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.app.NotificationCompat
+import androidx.preference.PreferenceManager
 import com.vzk.netspeed.R
 import com.vzk.netspeed.data.PrefsManager
 import com.vzk.netspeed.ui.MainActivity
@@ -51,6 +54,17 @@ class NetSpeedService : Service() {
     private var overlayLayout: LinearLayout? = null
     private var overlayDownText: TextView? = null
     private var overlayUpText: TextView? = null
+    private var overlayParams: WindowManager.LayoutParams? = null
+
+    private val prefsListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+        when (key) {
+            "overlay_x", "overlay_y", "overlay_show_mode",
+            "overlay_text_size", "overlay_download_color",
+            "overlay_upload_color", "overlay_bg_transparent" -> {
+                handler.post { refreshOverlay() }
+            }
+        }
+    }
 
     private val updateRunnable = object : Runnable {
         override fun run() {
@@ -63,6 +77,8 @@ class NetSpeedService : Service() {
         super.onCreate()
         prefs = PrefsManager(this)
         createNotificationChannel()
+        PreferenceManager.getDefaultSharedPreferences(this)
+            .registerOnSharedPreferenceChangeListener(prefsListener)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -84,6 +100,8 @@ class NetSpeedService : Service() {
 
     override fun onDestroy() {
         handler.removeCallbacks(updateRunnable)
+        PreferenceManager.getDefaultSharedPreferences(this)
+            .unregisterOnSharedPreferenceChangeListener(prefsListener)
         removeOverlay()
         super.onDestroy()
     }
@@ -93,34 +111,26 @@ class NetSpeedService : Service() {
 
         windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
 
-        // Create container layout — horizontal, two speed values side by side
         overlayLayout = LinearLayout(this).apply {
             orientation = LinearLayout.HORIZONTAL
-            setBackgroundColor(Color.argb(160, 0, 0, 0))  // semi-transparent black
             setPadding(dpToPx(6), dpToPx(1), dpToPx(6), dpToPx(1))
         }
 
-        val textSize = 11f  // sp — compact but readable
-
         overlayDownText = TextView(this).apply {
             text = "\u2193 ---"
-            setTextColor(Color.parseColor("#4FC3F7"))  // light blue for download
-            setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize)
             typeface = Typeface.DEFAULT_BOLD
             setPadding(0, 0, dpToPx(6), 0)
         }
 
         overlayUpText = TextView(this).apply {
             text = "\u2191 ---"
-            setTextColor(Color.parseColor("#AED581"))  // light green for upload
-            setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize)
             typeface = Typeface.DEFAULT_BOLD
         }
 
         overlayLayout!!.addView(overlayDownText)
         overlayLayout!!.addView(overlayUpText)
 
-        val params = WindowManager.LayoutParams(
+        overlayParams = WindowManager.LayoutParams(
             WindowManager.LayoutParams.WRAP_CONTENT,
             WindowManager.LayoutParams.WRAP_CONTENT,
             WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
@@ -131,16 +141,52 @@ class NetSpeedService : Service() {
             PixelFormat.TRANSLUCENT
         ).apply {
             gravity = Gravity.TOP or Gravity.START
-            x = dpToPx(52)  // offset past the clock area
-            y = dpToPx(10)
         }
 
+        applyOverlayPrefs()
+
         try {
-            windowManager?.addView(overlayLayout, params)
+            windowManager?.addView(overlayLayout, overlayParams)
         } catch (e: Exception) {
-            // Permission revoked or other issue
             overlayLayout = null
         }
+    }
+
+    private fun applyOverlayPrefs() {
+        val mode = prefs.overlayShowMode
+        val textSize = prefs.overlayTextSize.toFloat()
+        val downColor = try { Color.parseColor(prefs.overlayDownloadColor) } catch (_: Exception) { Color.parseColor("#4FC3F7") }
+        val upColor = try { Color.parseColor(prefs.overlayUploadColor) } catch (_: Exception) { Color.parseColor("#AED581") }
+        val bgTransparent = prefs.overlayBgTransparent
+
+        overlayDownText?.apply {
+            setTextColor(downColor)
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize)
+            visibility = if (mode == "upload") View.GONE else View.VISIBLE
+        }
+
+        overlayUpText?.apply {
+            setTextColor(upColor)
+            setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize)
+            visibility = if (mode == "download") View.GONE else View.VISIBLE
+        }
+
+        overlayLayout?.setBackgroundColor(
+            if (bgTransparent) Color.TRANSPARENT else Color.argb(160, 0, 0, 0)
+        )
+
+        overlayParams?.apply {
+            x = dpToPx(prefs.overlayX)
+            y = dpToPx(prefs.overlayY)
+        }
+    }
+
+    private fun refreshOverlay() {
+        if (overlayLayout == null || overlayParams == null) return
+        applyOverlayPrefs()
+        try {
+            windowManager?.updateViewLayout(overlayLayout, overlayParams)
+        } catch (_: Exception) {}
     }
 
     private fun removeOverlay() {
@@ -152,6 +198,7 @@ class NetSpeedService : Service() {
         overlayLayout = null
         overlayDownText = null
         overlayUpText = null
+        overlayParams = null
     }
 
     private fun dpToPx(dp: Int): Int {
@@ -202,10 +249,11 @@ class NetSpeedService : Service() {
 
         updateNotification(text)
 
-        // Update overlay
+        // Update overlay text
         handler.post {
-            overlayDownText?.text = "\u2193 $downStr"
-            overlayUpText?.text = "\u2191 $upStr"
+            val mode = prefs.overlayShowMode
+            if (mode != "upload") overlayDownText?.text = "\u2193 $downStr"
+            if (mode != "download") overlayUpText?.text = "\u2191 $upStr"
         }
 
         // Broadcast for UI updates

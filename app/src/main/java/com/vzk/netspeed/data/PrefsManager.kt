@@ -81,6 +81,35 @@ class PrefsManager(context: Context) {
         get() = prefs.getBoolean("service_enabled", false)
         set(value) = prefs.edit().putBoolean("service_enabled", value).apply()
 
+    // Overlay customization
+    var overlayShowMode: String
+        get() = prefs.getString("overlay_show_mode", "both") ?: "both"
+        set(value) = prefs.edit().putString("overlay_show_mode", value).apply()
+
+    var overlayTextSize: Int
+        get() = prefs.getInt("overlay_text_size", 11)
+        set(value) = prefs.edit().putInt("overlay_text_size", value).apply()
+
+    var overlayDownloadColor: String
+        get() = prefs.getString("overlay_download_color", "#4FC3F7") ?: "#4FC3F7"
+        set(value) = prefs.edit().putString("overlay_download_color", value).apply()
+
+    var overlayUploadColor: String
+        get() = prefs.getString("overlay_upload_color", "#AED581") ?: "#AED581"
+        set(value) = prefs.edit().putString("overlay_upload_color", value).apply()
+
+    var overlayX: Int
+        get() = prefs.getInt("overlay_x", 52)
+        set(value) = prefs.edit().putInt("overlay_x", value).apply()
+
+    var overlayY: Int
+        get() = prefs.getInt("overlay_y", 10)
+        set(value) = prefs.edit().putInt("overlay_y", value).apply()
+
+    var overlayBgTransparent: Boolean
+        get() = prefs.getBoolean("overlay_bg_transparent", false)
+        set(value) = prefs.edit().putBoolean("overlay_bg_transparent", value).apply()
+
     // Wi-Fi usage tracking
     // Stored as "ssid1\trx\ttx\nssid2\trx\ttx\n..."
     fun getWifiUsageMap(): MutableMap<String, Pair<Long, Long>> {
