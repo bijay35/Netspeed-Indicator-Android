@@ -87,8 +87,8 @@ class PrefsManager(context: Context) {
         set(value) = prefs.edit().putString("overlay_show_mode", value).apply()
 
     var overlayTextSize: Int
-        get() = prefs.getInt("overlay_text_size", 11)
-        set(value) = prefs.edit().putInt("overlay_text_size", value).apply()
+        get() = (prefs.getString("overlay_text_size", "11") ?: "11").toIntOrNull() ?: 11
+        set(value) = prefs.edit().putString("overlay_text_size", value.toString()).apply()
 
     var overlayDownloadColor: String
         get() = prefs.getString("overlay_download_color", "#4FC3F7") ?: "#4FC3F7"
