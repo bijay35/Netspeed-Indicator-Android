@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Speed Display -->
+    <PreferenceCategory android:title="Speed Display">
+
+        <SwitchPreferenceCompat
+            android:key="show_download"
+            android:title="Show Download Speed"
+            android:summary="Display download speed"
+            android:defaultValue="true" />
+
+        <SwitchPreferenceCompat
+            android:key="show_upload"
+            android:title="Show Upload Speed"
+            android:summary="Display upload speed"
+            android:defaultValue="true" />
+
+        <ListPreference
+            android:key="speed_unit"
+            android:title="Speed Unit"
+            android:summary="Choose how speeds are displayed"
+            android:entries="@array/speed_unit_entries"
+            android:entryValues="@array/speed_unit_values"
+            android:defaultValue="adaptive" />
+
+        <SeekBarPreference
+            android:key="refresh_interval"
+            android:title="Refresh Interval (seconds)"
+            android:defaultValue="1"
+            android:max="10"
+            app:min="1"
+            app:showSeekBarValue="true" />
+    </PreferenceCategory>
+
+    <!-- Data Usage -->
+    <PreferenceCategory android:title="Data Usage">
+
+        <SwitchPreferenceCompat
+            android:key="monthly_reset"
+            android:title="Auto Reset Monthly"
+            android:summary="Automatically reset data usage each month"
+            android:defaultValue="true" />
+
+        <SeekBarPreference
+            android:key="reset_day"
+            android:title="Reset Day of Month"
+            android:defaultValue="1"
+            android:max="28"
+            app:min="1"
+            app:showSeekBarValue="true" />
+    </PreferenceCategory>
+
+    <!-- Weather -->
+    <PreferenceCategory android:title="Weather">
+
+        <SwitchPreferenceCompat
+            android:key="show_weather"
+            android:title="Show Weather"
+            android:summary="Enable weather display (uses wttr.in)"
+            android:defaultValue="false" />
+
+        <ListPreference
+            android:key="temperature_unit"
+            android:title="Temperature Unit"
+            android:entries="@array/temp_unit_entries"
+            android:entryValues="@array/temp_unit_values"
+            android:defaultValue="celsius" />
+
+        <EditTextPreference
+            android:key="weather_location"
+            android:title="Weather Location"
+            android:summary="City name (e.g., London, New York, Tokyo)"
+            android:defaultValue="" />
+    </PreferenceCategory>
+
+    <!-- World Clock -->
+    <PreferenceCategory android:title="World Clock">
+
+        <SwitchPreferenceCompat
+            android:key="show_world_clock"
+            android:title="Enable World Clock"
+            android:summary="Show times from different timezones"
+            android:defaultValue="false" />
+
+        <ListPreference
+            android:key="clock_format"
+            android:title="Clock Format"
+            android:entries="@array/clock_format_entries"
+            android:entryValues="@array/clock_format_values"
+            android:defaultValue="24h" />
+
+        <Preference
+            android:key="current_timezones"
+            android:title="Current Timezones"
+            android:summary="No timezones added"
+            android:selectable="false" />
+
+        <EditTextPreference
+            android:key="add_timezone"
+            android:title="Add Timezone"
+            android:summary="Enter IANA timezone ID (e.g., America/New_York)"
+            android:dialogTitle="Add Timezone"
+            android:defaultValue="" />
+
+        <Preference
+            android:key="clear_timezones"
+            android:title="Clear All Timezones"
+            android:summary="Remove all timezone entries" />
+    </PreferenceCategory>
+</PreferenceScreen>

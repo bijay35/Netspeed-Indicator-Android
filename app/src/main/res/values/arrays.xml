@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="speed_unit_entries">
+        <item>Adaptive (auto KB/s or MB/s)</item>
+        <item>KB/s</item>
+        <item>MB/s</item>
+    </string-array>
+    <string-array name="speed_unit_values">
+        <item>adaptive</item>
+        <item>kbps</item>
+        <item>mbps</item>
+    </string-array>
+
+    <string-array name="temp_unit_entries">
+        <item>Celsius (\u00B0C)</item>
+        <item>Fahrenheit (\u00B0F)</item>
+    </string-array>
+    <string-array name="temp_unit_values">
+        <item>celsius</item>
+        <item>fahrenheit</item>
+    </string-array>
+
+    <string-array name="clock_format_entries">
+        <item>24-hour (14:30)</item>
+        <item>12-hour (2:30 PM)</item>
+    </string-array>
+    <string-array name="clock_format_values">
+        <item>24h</item>
+        <item>12h</item>
+    </string-array>
+</resources>
