@@ -4,14 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
-    app:cardElevation="1dp"
-    app:cardCornerRadius="10dp">
+    app:cardElevation="0dp"
+    app:cardCornerRadius="14dp"
+    app:strokeWidth="1dp"
+    app:strokeColor="?attr/colorOutlineVariant">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="12dp">
+        android:padding="14dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,26 +21,28 @@
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
-            <!-- Rank -->
+            <!-- Rank badge -->
             <TextView
                 android:id="@+id/text_rank"
-                android:layout_width="28dp"
-                android:layout_height="wrap_content"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
                 android:text="1"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 android:textStyle="bold"
-                android:textColor="?android:attr/textColorSecondary"
-                android:gravity="center" />
+                android:textColor="?attr/colorPrimary"
+                android:gravity="center"
+                android:background="@drawable/bg_speed_down" />
 
             <!-- App icon -->
             <ImageView
                 android:id="@+id/image_app_icon"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginEnd="10dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="12dp"
                 android:contentDescription="App icon" />
 
-            <!-- App name and total -->
+            <!-- App name and usage breakdown -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -50,7 +54,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="App Name"
-                    android:textSize="14sp"
+                    android:textSize="15sp"
                     android:textStyle="bold"
                     android:maxLines="1"
                     android:ellipsize="end" />
@@ -58,23 +62,24 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginTop="2dp">
 
                     <TextView
                         android:id="@+id/text_download"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="\u2193 0 B"
-                        android:textSize="11sp"
+                        android:textSize="12sp"
                         android:textColor="@color/download_color"
-                        android:layout_marginEnd="12dp" />
+                        android:layout_marginEnd="14dp" />
 
                     <TextView
                         android:id="@+id/text_upload"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="\u2191 0 B"
-                        android:textSize="11sp"
+                        android:textSize="12sp"
                         android:textColor="@color/upload_color" />
                 </LinearLayout>
             </LinearLayout>
@@ -85,7 +90,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0 B"
-                android:textSize="14sp"
+                android:textSize="15sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -94,8 +99,9 @@
             android:id="@+id/progress_usage"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
-            android:layout_height="4dp"
-            android:layout_marginTop="8dp"
-            android:progressTint="?attr/colorPrimary" />
+            android:layout_height="6dp"
+            android:layout_marginTop="10dp"
+            android:progressTint="@color/primary"
+            android:progressBackgroundTint="@color/surface_tint" />
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

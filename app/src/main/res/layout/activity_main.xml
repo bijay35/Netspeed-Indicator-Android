@@ -8,13 +8,15 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        app:elevation="0dp">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="@string/app_name" />
+            app:title="@string/app_name"
+            app:titleTextAppearance="@style/TextAppearance.Material3.TitleLarge" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -28,28 +30,44 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Service Toggle -->
+            <!-- Service Toggle Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
-                app:cardElevation="2dp"
-                app:cardCornerRadius="12dp">
+                app:cardElevation="0dp"
+                app:cardCornerRadius="16dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="?attr/colorOutlineVariant">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:padding="16dp">
+                    android:padding="20dp">
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Speed Monitor"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Speed Monitor"
+                            android:textSize="17sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Show live speed on status bar"
+                            android:textSize="13sp"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:layout_marginTop="2dp" />
+                    </LinearLayout>
 
                     <com.google.android.material.materialswitch.MaterialSwitch
                         android:id="@+id/switch_service"
@@ -58,28 +76,31 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Speed Display -->
+            <!-- Speed Display Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
-                app:cardElevation="2dp"
-                app:cardCornerRadius="12dp">
+                app:cardElevation="0dp"
+                app:cardCornerRadius="16dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="?attr/colorOutlineVariant">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="20dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Network Speed"
-                        android:textSize="14sp"
-                        android:textColor="?attr/colorPrimary"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="12dp" />
+                        android:textSize="13sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:letterSpacing="0.05"
+                        android:textAllCaps="true"
+                        android:layout_marginBottom="16dp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -87,56 +108,68 @@
                         android:orientation="horizontal"
                         android:baselineAligned="false">
 
+                        <!-- Download -->
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:orientation="vertical"
-                            android:gravity="center">
+                            android:gravity="center"
+                            android:background="@drawable/bg_speed_down"
+                            android:padding="14dp"
+                            android:layout_marginEnd="6dp">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Download"
-                                android:textSize="12sp" />
+                                android:text="\u2193 Download"
+                                android:textSize="12sp"
+                                android:textColor="@color/download_color" />
 
                             <TextView
                                 android:id="@+id/text_download_speed"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="---"
-                                android:textSize="20sp"
+                                android:textSize="22sp"
                                 android:textStyle="bold"
-                                android:textColor="@color/download_color" />
+                                android:textColor="@color/download_color"
+                                android:layout_marginTop="4dp" />
                         </LinearLayout>
 
+                        <!-- Upload -->
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:orientation="vertical"
-                            android:gravity="center">
+                            android:gravity="center"
+                            android:background="@drawable/bg_speed_up"
+                            android:padding="14dp"
+                            android:layout_marginStart="6dp">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Upload"
-                                android:textSize="12sp" />
+                                android:text="\u2191 Upload"
+                                android:textSize="12sp"
+                                android:textColor="@color/upload_color" />
 
                             <TextView
                                 android:id="@+id/text_upload_speed"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="---"
-                                android:textSize="20sp"
+                                android:textSize="22sp"
                                 android:textStyle="bold"
-                                android:textColor="@color/upload_color" />
+                                android:textColor="@color/upload_color"
+                                android:layout_marginTop="4dp" />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Analytics Button -->
+            <!-- Analytics Button Card -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_analytics"
                 android:layout_width="match_parent"
@@ -144,8 +177,9 @@
                 android:layout_marginBottom="12dp"
                 android:clickable="true"
                 android:focusable="true"
-                app:cardElevation="2dp"
-                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
+                app:cardCornerRadius="16dp"
+                app:cardBackgroundColor="@color/card_analytics_bg"
                 app:rippleColor="?attr/colorControlHighlight">
 
                 <LinearLayout
@@ -153,72 +187,104 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:padding="16dp">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="\uD83D\uDCCA App Data Analytics"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:textColor="?attr/colorPrimary" />
+                    android:padding="20dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="View \u203A"
-                        android:textSize="13sp"
-                        android:textColor="?attr/colorPrimary" />
+                        android:text="\uD83D\uDCCA"
+                        android:textSize="28sp"
+                        android:layout_marginEnd="14dp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="App Data Analytics"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Per-app usage &amp; Wi-Fi networks"
+                            android:textSize="13sp"
+                            android:textColor="?android:attr/textColorSecondary"
+                            android:layout_marginTop="2dp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="\u203A"
+                        android:textSize="24sp"
+                        android:textColor="?android:attr/textColorSecondary" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Data Usage -->
+            <!-- Data Usage Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
-                app:cardElevation="2dp"
-                app:cardCornerRadius="12dp">
+                app:cardElevation="0dp"
+                app:cardCornerRadius="16dp"
+                app:strokeWidth="1dp"
+                app:strokeColor="?attr/colorOutlineVariant">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="20dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="\uD83D\uDCCA Data Usage"
-                        android:textSize="14sp"
-                        android:textColor="?attr/colorPrimary"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="8dp" />
+                        android:text="DATA USAGE"
+                        android:textSize="13sp"
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:letterSpacing="0.05"
+                        android:layout_marginBottom="12dp" />
 
                     <TextView
                         android:id="@+id/text_total_data"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Total: ---"
-                        android:textSize="14sp"
-                        android:layout_marginBottom="4dp" />
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="8dp" />
 
-                    <TextView
-                        android:id="@+id/text_total_downloaded"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Downloaded: ---"
-                        android:textSize="14sp"
-                        android:layout_marginBottom="4dp" />
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="4dp">
 
-                    <TextView
-                        android:id="@+id/text_total_uploaded"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Uploaded: ---"
-                        android:textSize="14sp"
-                        android:layout_marginBottom="4dp" />
+                        <TextView
+                            android:id="@+id/text_total_downloaded"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="\u2193 Downloaded: ---"
+                            android:textSize="14sp"
+                            android:textColor="@color/download_color" />
+
+                        <TextView
+                            android:id="@+id/text_total_uploaded"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="\u2191 Uploaded: ---"
+                            android:textSize="14sp"
+                            android:textColor="@color/upload_color" />
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/text_tracking_since"
@@ -226,35 +292,36 @@
                         android:layout_height="wrap_content"
                         android:text="Since: ---"
                         android:textSize="12sp"
-                        android:textColor="?android:attr/textColorSecondary" />
+                        android:textColor="?android:attr/textColorSecondary"
+                        android:layout_marginTop="8dp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Weather -->
+            <!-- Weather Card -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_weather"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
                 android:visibility="gone"
-                app:cardElevation="2dp"
-                app:cardCornerRadius="12dp">
+                app:cardElevation="0dp"
+                app:cardCornerRadius="16dp"
+                app:cardBackgroundColor="@color/card_weather_bg">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="20dp">
 
                     <TextView
                         android:id="@+id/text_weather_header"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="\u2600\uFE0F Weather"
-                        android:textSize="14sp"
-                        android:textColor="?attr/colorPrimary"
+                        android:textSize="16sp"
                         android:textStyle="bold"
-                        android:layout_marginBottom="8dp" />
+                        android:layout_marginBottom="12dp" />
 
                     <TextView
                         android:id="@+id/text_weather_temp"
@@ -291,49 +358,50 @@
                         android:textSize="12sp"
                         android:textColor="?android:attr/textColorSecondary"
                         android:visibility="gone"
-                        android:layout_marginBottom="8dp" />
+                        android:layout_marginBottom="12dp" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/button_refresh_weather"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Refresh Weather"
-                        style="@style/Widget.Material3.Button.TextButton" />
+                        android:text="Refresh"
+                        style="@style/Widget.Material3.Button.TonalButton" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- World Clock -->
+            <!-- World Clock Card -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_world_clock"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
                 android:visibility="gone"
-                app:cardElevation="2dp"
-                app:cardCornerRadius="12dp">
+                app:cardElevation="0dp"
+                app:cardCornerRadius="16dp"
+                app:cardBackgroundColor="@color/card_clock_bg">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:padding="20dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="\uD83D\uDD70\uFE0F World Clock"
-                        android:textSize="14sp"
-                        android:textColor="?attr/colorPrimary"
+                        android:text="\uD83C\uDF0D World Clock"
+                        android:textSize="16sp"
                         android:textStyle="bold"
-                        android:layout_marginBottom="8dp" />
+                        android:layout_marginBottom="12dp" />
 
                     <TextView
                         android:id="@+id/text_world_clocks"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="No timezones added"
-                        android:textSize="14sp"
-                        android:fontFamily="monospace" />
+                        android:textSize="15sp"
+                        android:fontFamily="monospace"
+                        android:lineSpacingExtra="4dp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
